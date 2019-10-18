@@ -11,11 +11,15 @@ resolvconf -u
 systemctl restart networking.service
 while [ `systemctl is-active networking` != 'active' ]; do echo 'waiting for network'; sleep 5; done
 
-# asks apt server to provide un-cached files to avoid cache-related issues
-sudo apt -o Acquire::https::No-Cache=True -o Acquire::http::No-Cache=True update
-
 growpart /dev/sda 1 || :
 resize2fs /dev/sda1 || :
+
+# todo testing this out
+systemctl restart networking.service
+while [ `systemctl is-active networking` != 'active' ]; do echo 'waiting for network'
+
+# asks apt server to provide un-cached files to avoid cache-related issues
+sudo apt -o Acquire::https::No-Cache=True -o Acquire::http::No-Cache=True update
 
 echo 'installing kubernetes'
 export DEBIAN_FRONTEND=noninteractive
