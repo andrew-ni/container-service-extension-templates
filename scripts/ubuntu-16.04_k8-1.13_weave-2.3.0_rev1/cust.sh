@@ -16,7 +16,7 @@ resize2fs /dev/sda1 || :
 
 # todo testing this out
 systemctl restart networking.service
-while [ `systemctl is-active networking` != 'active' ]; do echo 'waiting for network'
+while [ `systemctl is-active networking` != 'active' ]; do echo 'waiting for network'; sleep 5; done
 
 echo 'installing kubernetes'
 export DEBIAN_FRONTEND=noninteractive
