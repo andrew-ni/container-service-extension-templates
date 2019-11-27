@@ -16,6 +16,7 @@ templates:
     docker_version: "19.03.5"
     kubernetes: "upstream"
     kubernetes_version: "1.16.3"
-    cni: "weave-2.6.0"
+    cni: "weave"
+    cni_version: "2.6.0"
     upgrade_from:
-      - "ubuntu-16.04_k8-1.15_weave-2.5.2"
+      - "ubuntu-16.04_k8-1.15_weave-2.5.2, ubuntu-16.04_k8s-1.16_weave-2.6.0"
