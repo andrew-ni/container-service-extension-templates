@@ -6,16 +6,17 @@ templates:
     deprecated_in_cse_version: ""
     description: "PhotonOS v2, Docker-ce 18.06.2-3, Kubernetes 1.14.6, weave 2.5.2"
     mem: 2048
-    name: photon-v2_k8-1.14_weave-2.5.2
+    name: "photon-v2_k8-1.14_weave-2.5.2"
     required_cse_version: "2.5.0"
     revision: 1
-    sha256_ova: cb51e4b6d899c3588f961e73282709a0d054bb421787e140a1d80c24d4fd89e1
+    sha256_ova: "cb51e4b6d899c3588f961e73282709a0d054bb421787e140a1d80c24d4fd89e1"
     source_ova: "http://dl.bintray.com/vmware/photon/2.0/GA/ova/photon-custom-hw11-2.0-304b817.ova"
-    source_ova_name: photon-custom-hw11-2.0-304b817.ova
-    os: "photon-v2"
-    docker_version: "18.06.2-3"
-    kubernetes: "upstream"
-    kubernetes_version: "1.14.6"
-    cni: "weave-2.5.2"
-    upgrade_from:
-      - "ubuntu-16.04_k8-1.15_weave-2.5.2"
+    source_ova_name: "photon-custom-hw11-2.0-304b817.ova"
+    # os: "photon-v2"
+    # docker_version: "18.06.2-3"
+    # kubernetes: "upstream"
+    # kubernetes_version: "1.14.6"
+    # cni: "weave"
+    # cni_version: "2.5.2"
+    # upgrade_from:
+    #   - "photon-v2_k8-1.14_weave-2.5.2"
