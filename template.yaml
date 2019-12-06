@@ -16,6 +16,7 @@ templates:
     docker_version: "18.09.7"
     kubernetes: "upstream"
     kubernetes_version: "1.15."
-    cni: "weave-2.5.2"
+    cni: "weave"
+    cni_version: "2.5.2"
     upgrade_from:
       - "ubuntu-16.04_k8-1.15_weave-2.5.2"
