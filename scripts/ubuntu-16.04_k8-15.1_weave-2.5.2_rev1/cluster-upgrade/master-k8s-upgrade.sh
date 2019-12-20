@@ -10,7 +10,7 @@ apt-mark hold kubeadm kubelet kubectl kubernetes-cni
 
 echo 'upgrading kubeadm to v1.15.7'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
-sleep 20
+sleep 120
 # sometimes master will be in 'NotReady' state for a few seconds
 kubeadm upgrade apply v1.15.7 -y
 
