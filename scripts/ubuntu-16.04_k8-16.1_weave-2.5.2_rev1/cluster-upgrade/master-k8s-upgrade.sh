@@ -9,6 +9,9 @@ apt-get -q install -y kubelet=1.16.4-00 kubeadm=1.16.4-00 kubectl=1.16.4-00 kube
 apt-mark hold kubeadm kubelet kubectl kubernetes-cni
 
 echo 'upgrading kubeadm to v1.16.4'
+while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
+sleep 20
+# sometimes master will be in 'NotReady' state for a few seconds
 kubeadm upgrade apply v1.16.4 -y
 
 systemctl restart kubelet
