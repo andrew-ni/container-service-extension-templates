@@ -37,12 +37,6 @@ apt-get -q install -y kubelet=1.15.5-00 kubeadm=1.15.5-00 kubectl=1.15.5-00 kube
 systemctl restart docker
 while [ `systemctl is-active docker` != 'active' ]; do echo 'waiting for docker'; sleep 5; done
 
-echo 'setting up weave'
-export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O weave.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.0"
-curl -L git.io/weave -o /usr/local/bin/weave
-chmod a+x /usr/local/bin/weave
-
 echo 'installing required software for NFS'
 apt-get -q install -y nfs-common nfs-kernel-server
 systemctl stop nfs-kernel-server.service

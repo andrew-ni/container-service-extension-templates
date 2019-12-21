@@ -2,5 +2,4 @@
 
 set -e
 
-weave reset
-rm /opt/cni/bin/weave-*
+weave reset || :
