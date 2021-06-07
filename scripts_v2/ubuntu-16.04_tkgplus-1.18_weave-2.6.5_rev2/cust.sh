@@ -42,9 +42,6 @@ tar xvzf vmware-kubernetes-v1.18.10+vmware.1.tar.gz
 dpkg -i vmware-kubernetes-v1.18.10+vmware.1/debs/*.deb || :
 sudo apt-get -f install -y
 
-# set up local container image repository
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
-
 # kube proxy
 docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-proxy-v1.18.10_vmware.1.tar.gz
 
@@ -69,27 +66,18 @@ docker load < ./vmware-kubernetes-v1.18.10+vmware.1/etcd-v3.4.3+vmware.11/images
 # coredns
 docker load < ./vmware-kubernetes-v1.18.10+vmware.1/coredns-v1.6.7+vmware.6/images/coredns-v1.6.7_vmware.6.tar.gz
 
-docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 localhost:5000/kube-proxy:v1.18.10
-docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 localhost:5000/kube-controller-manager:v1.18.10
-docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 localhost:5000/kube-apiserver:v1.18.10
-docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 localhost:5000/kube-scheduler:v1.18.10
-docker tag registry.tkg.vmware.run/pause:3.2 localhost:5000/pause:3.2
-docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 localhost:5000/e2e-test:v1.18.10
-docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 localhost:5000/etcd:3.4.3-0
-docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  localhost:5000/coredns:1.6.7
-
-docker push localhost:5000/kube-proxy:v1.18.10
-docker push localhost:5000/kube-controller-manager:v1.18.10
-docker push localhost:5000/kube-apiserver:v1.18.10
-docker push localhost:5000/kube-scheduler:v1.18.10
-docker push localhost:5000/pause:3.2
-docker push localhost:5000/e2e-test:v1.18.10
-docker push localhost:5000/etcd:3.4.3-0
-docker push localhost:5000/coredns:1.6.7
+docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:v1.18.10
+docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:v1.18.10
+docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 k8s.gcr.io/kube-apiserver:v1.18.10
+docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 k8s.gcr.io/kube-scheduler:v1.18.10
+docker tag registry.tkg.vmware.run/pause:3.2 k8s.gcr.io/pause:3.2
+docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 k8s.gcr.io/e2e-test:v1.18.10
+docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 k8s.gcr.io/etcd:3.4.3-0
+docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:1.6.7
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O weave.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
+wget --no-verbose -O weavev2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.6.5

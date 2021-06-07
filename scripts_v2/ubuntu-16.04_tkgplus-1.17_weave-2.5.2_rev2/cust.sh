@@ -42,9 +42,6 @@ tar xvzf vmware-kubernetes-v1.17.3+vmware.1.tar.gz
 dpkg -i vmware-kubernetes-v1.17.3+vmware.1/debs/*.deb || :
 sudo apt-get -f install -y
 
-# set up local container image repository
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
-
 # kube proxy
 docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-proxy-v1.17.3_vmware.1.tar.gz
 
@@ -69,27 +66,18 @@ docker load < ./vmware-kubernetes-v1.17.3+vmware.1/etcd-v3.4.3+vmware.3/images/e
 # coredns
 docker load < ./vmware-kubernetes-v1.17.3+vmware.1/coredns-v1.6.5+vmware.3/images/coredns-v1.6.5_vmware.3.tar.gz
 
-docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 localhost:5000/kube-proxy:v1.17.3
-docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 localhost:5000/kube-controller-manager:v1.17.3
-docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 localhost:5000/kube-apiserver:v1.17.3
-docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 localhost:5000/kube-scheduler:v1.17.3
-docker tag vmware.io/pause:3.1 localhost:5000/pause:3.1
-docker tag vmware.io/e2e-test:v1.17.3_vmware.1 localhost:5000/e2e-test:v1.17.3
-docker tag vmware.io/etcd:v3.4.3_vmware.3 localhost:5000/etcd:3.4.3-0
-docker tag vmware.io/coredns:v1.6.5_vmware.3  localhost:5000/coredns:1.6.5
-
-docker push localhost:5000/kube-proxy:v1.17.3
-docker push localhost:5000/kube-controller-manager:v1.17.3
-docker push localhost:5000/kube-apiserver:v1.17.3
-docker push localhost:5000/kube-scheduler:v1.17.3
-docker push localhost:5000/pause:3.1
-docker push localhost:5000/e2e-test:v1.17.3
-docker push localhost:5000/etcd:3.4.3-0
-docker push localhost:5000/coredns:1.6.5
+docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:v1.17.3
+docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.17.3
+docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.17.3
+docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.17.3
+docker tag vmware.io/pause:3.1 k8s.gcr.io/pause:3.1
+docker tag vmware.io/e2e-test:v1.17.3_vmware.1 k8s.gcr.io/e2e-test:v1.17.3
+docker tag vmware.io/etcd:v3.4.3_vmware.3 k8s.gcr.io/etcd:3.4.3-0
+docker tag vmware.io/coredns:v1.6.5_vmware.3  k8s.gcr.io/coredns:1.6.5
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O weave.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.5.2"
+wget --no-verbose -O weavev2-5-2.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.5.2"
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.5.2
