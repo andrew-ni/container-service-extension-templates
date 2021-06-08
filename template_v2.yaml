@@ -3,7 +3,6 @@ scripts_directory: scripts_v2
 templates:
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 19.03.12, Kubernetes 1.19.3 (VMware Tanzu Kubernetes Grid Plus), Weave 2.6.5"
@@ -26,7 +25,6 @@ templates:
 
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 19.03.12, Kubernetes 1.18.10 (VMware Tanzu Kubernetes Grid Plus), Weave 2.6.5"
@@ -48,7 +46,6 @@ templates:
       - "ubuntu-16.04_tkgplus-1.17_weave-2.5.2"
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 18.09.7, Kubernetes 1.17.3 (VMware Tanzu Kubernetes Grid Plus), Weave 2.5.2"
