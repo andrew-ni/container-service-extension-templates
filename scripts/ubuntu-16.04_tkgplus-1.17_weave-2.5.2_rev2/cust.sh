@@ -42,9 +42,6 @@ tar xvzf vmware-kubernetes-v1.17.3+vmware.1.tar.gz
 dpkg -i vmware-kubernetes-v1.17.3+vmware.1/debs/*.deb || :
 sudo apt-get -f install -y
 
-# set up local container image repository
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
-
 # kube proxy
 docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-proxy-v1.17.3_vmware.1.tar.gz
 
