@@ -3,8 +3,8 @@
 set -e
 
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O /root/weave.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
-kubectl apply -f /root/weave.yml
+wget --no-verbose -O /root/weave_v2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
+kubectl apply -f /root/weave_v2-6-5.yml
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.6.5

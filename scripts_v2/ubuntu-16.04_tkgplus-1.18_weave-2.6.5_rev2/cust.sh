@@ -77,7 +77,7 @@ docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:1
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O weavev2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
+wget --no-verbose -O weave_v2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.6.5
