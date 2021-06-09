@@ -9,28 +9,28 @@ dpkg -i vmware-kubernetes-v1.18.10+vmware.1/debs/*.deb || :
 sudo apt-get -f install -y
 
 # kube proxy
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-proxy-v1.18.10_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-proxy-v1.18.10_vmware.1.tar.gz
 
 # kube controller manager
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-controller-manager-v1.18.10_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-controller-manager-v1.18.10_vmware.1.tar.gz
 
 # kube api server
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-apiserver-v1.18.10_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-apiserver-v1.18.10_vmware.1.tar.gz
 
 # kube scheduler
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-scheduler-v1.18.10_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-scheduler-v1.18.10_vmware.1.tar.gz
 
 # pause
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/pause-3.2.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/pause-3.2.tar.gz
 
 # e2e test
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/e2e-test-v1.18.10_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/e2e-test-v1.18.10_vmware.1.tar.gz
 
 # etcd
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/etcd-v3.4.3+vmware.11/images/etcd-v3.4.3_vmware.11.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/etcd-v3.4.3+vmware.11/images/etcd-v3.4.3_vmware.11.tar.gz
 
 # coredns
-docker load < ./vmware-kubernetes-v1.18.10+vmware.1/coredns-v1.6.7+vmware.6/images/coredns-v1.6.7_vmware.6.tar.gz
+docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/coredns-v1.6.7+vmware.6/images/coredns-v1.6.7_vmware.6.tar.gz
 
 docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:v1.18.10
 docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:v1.18.10

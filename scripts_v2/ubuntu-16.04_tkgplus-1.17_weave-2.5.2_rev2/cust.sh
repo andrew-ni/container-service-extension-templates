@@ -43,28 +43,28 @@ dpkg -i vmware-kubernetes-v1.17.3+vmware.1/debs/*.deb || :
 sudo apt-get -f install -y
 
 # kube proxy
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-proxy-v1.17.3_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-proxy-v1.17.3_vmware.1.tar.gz
 
 # kube controller manager
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-controller-manager-v1.17.3_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-controller-manager-v1.17.3_vmware.1.tar.gz
 
 # kube api server
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-apiserver-v1.17.3_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-apiserver-v1.17.3_vmware.1.tar.gz
 
 # kube scheduler
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-scheduler-v1.17.3_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-scheduler-v1.17.3_vmware.1.tar.gz
 
 # pause
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/pause-3.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/pause-3.1.tar.gz
 
 # e2e test
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/e2e-test-v1.17.3_vmware.1.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/e2e-test-v1.17.3_vmware.1.tar.gz
 
 # etcd
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/etcd-v3.4.3+vmware.3/images/etcd-v3.4.3_vmware.3.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/etcd-v3.4.3+vmware.3/images/etcd-v3.4.3_vmware.3.tar.gz
 
 # coredns
-docker load < ./vmware-kubernetes-v1.17.3+vmware.1/coredns-v1.6.5+vmware.3/images/coredns-v1.6.5_vmware.3.tar.gz
+docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/coredns-v1.6.5+vmware.3/images/coredns-v1.6.5_vmware.3.tar.gz
 
 docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:v1.17.3
 docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.17.3
