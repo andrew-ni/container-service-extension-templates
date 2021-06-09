@@ -66,23 +66,14 @@ docker load -i ./vmware-kubernetes-v1.19.3+vmware.1/etcd-v3.4.13+vmware.4/images
 # coredns
 docker load -i ./vmware-kubernetes-v1.19.3+vmware.1/coredns-v1.7.0+vmware.5/images/coredns-v1.7.0_vmware.5.tar.gz
 
-docker tag registry.tkg.vmware.run/kube-proxy:v1.19.3_vmware.1 k8s.gcr.io/kube-proxy:v1.19.3
-docker tag registry.tkg.vmware.run/kube-controller-manager:v1.19.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.19.3
-docker tag registry.tkg.vmware.run/kube-apiserver:v1.19.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.19.3
-docker tag registry.tkg.vmware.run/kube-scheduler:v1.19.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.19.3
+docker tag registry.tkg.vmware.run/kube-proxy:v1.19.3_vmware.1 k8s.gcr.io/kube-proxy:v1.19.3-vmaere.1
+docker tag registry.tkg.vmware.run/kube-controller-manager:v1.19.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.19.3-vmware.1
+docker tag registry.tkg.vmware.run/kube-apiserver:v1.19.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.19.3-vmware.1
+docker tag registry.tkg.vmware.run/kube-scheduler:v1.19.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.19.3-vmware.1
 docker tag registry.tkg.vmware.run/pause:3.2 k8s.gcr.io/pause:3.2
-docker tag registry.tkg.vmware.run/e2e-test:v1.19.3_vmware.1 k8s.gcr.io/e2e-test:v1.19.3
+docker tag registry.tkg.vmware.run/e2e-test:v1.19.3_vmware.1 k8s.gcr.io/e2e-test:v1.19.3-vmware.1
 docker tag registry.tkg.vmware.run/etcd:v3.4.13_vmware.4 k8s.gcr.io/etcd:3.4.13-0
 docker tag registry.tkg.vmware.run/coredns:v1.7.0_vmware.5  k8s.gcr.io/coredns:1.7.0
-
-docker push k8s.gcr.io/kube-proxy:v1.19.3
-docker push k8s.gcr.io/kube-controller-manager:v1.19.3
-docker push k8s.gcr.io/kube-apiserver:v1.19.3
-docker push k8s.gcr.io/kube-scheduler:v1.19.3
-docker push k8s.gcr.io/pause:3.2
-docker push k8s.gcr.io/e2e-test:v1.19.3
-docker push k8s.gcr.io/etcd:3.4.13-0
-docker push k8s.gcr.io/coredns:1.7.0
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')

@@ -66,12 +66,12 @@ docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/etcd-v3.4.3+vmware.3/images/
 # coredns
 docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/coredns-v1.6.5+vmware.3/images/coredns-v1.6.5_vmware.3.tar.gz
 
-docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:v1.17.3
-docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.17.3
-docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.17.3
-docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.17.3
+docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:v1.17.3-vmware.1
+docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.17.3-vmware.1
+docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.17.3-vmware.1
+docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.17.3-vmware.1
 docker tag vmware.io/pause:3.1 k8s.gcr.io/pause:3.1
-docker tag vmware.io/e2e-test:v1.17.3_vmware.1 k8s.gcr.io/e2e-test:v1.17.3
+docker tag vmware.io/e2e-test:v1.17.3_vmware.1 k8s.gcr.io/e2e-test:v1.17.3-vmware.1
 docker tag vmware.io/etcd:v3.4.3_vmware.3 k8s.gcr.io/etcd:3.4.3-0
 docker tag vmware.io/coredns:v1.6.5_vmware.3  k8s.gcr.io/coredns:1.6.5
 

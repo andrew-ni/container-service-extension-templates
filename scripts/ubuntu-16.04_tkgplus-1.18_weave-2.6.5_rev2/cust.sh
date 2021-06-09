@@ -66,12 +66,12 @@ docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/etcd-v3.4.3+vmware.11/image
 # coredns
 docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/coredns-v1.6.7+vmware.6/images/coredns-v1.6.7_vmware.6.tar.gz
 
-docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:v1.18.10
-docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:v1.18.10
-docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 k8s.gcr.io/kube-apiserver:v1.18.10
-docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 k8s.gcr.io/kube-scheduler:v1.18.10
+docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:v1.18.10-vmware.1
+docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:v1.18.10-vmware.1
+docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 k8s.gcr.io/kube-apiserver:v1.18.10-vmware.1
+docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 k8s.gcr.io/kube-scheduler:v1.18.10-vmware.1
 docker tag registry.tkg.vmware.run/pause:3.2 k8s.gcr.io/pause:3.2
-docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 k8s.gcr.io/e2e-test:v1.18.10
+docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 k8s.gcr.io/e2e-test:v1.18.10-vmware.1
 docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 k8s.gcr.io/etcd:3.4.3-0
 docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:1.6.7
 
