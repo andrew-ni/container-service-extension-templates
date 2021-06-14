@@ -1,18 +1,14 @@
-# NOTE: This template cookbook is deprecated.
-# CSE versions <= 3.0 can continue to use this template cookbook.
-# CSE versions >= 3.1 must begin to use new /template_v2.yaml
-version: '1.0.0'
-scripts_directory: scripts
+version: '2.0.0'
+scripts_directory: scripts_v2
 templates:
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 19.03.12, Kubernetes 1.19.3 (VMware Tanzu Kubernetes Grid Plus), Weave 2.6.5"
     mem: 2048
     name: ubuntu-16.04_tkgplus-1.19_weave-2.6.5
-    revision: 2
+    revision: 3
     sha256_ova: 3c1bec8e2770af5b9b0462e20b7b24633666feedff43c099a6fb1330fcc869a9
     source_ova: "https://cloud-images.ubuntu.com/releases/xenial/release-20180418/ubuntu-16.04-server-cloudimg-amd64.ova"
     source_ova_name: ubuntu-16.04-server-cloudimg-amd64.ova
@@ -22,17 +18,19 @@ templates:
     kubernetes_version: "1.19.3-vmware.1"
     cni: "weave"
     cni_version: "2.6.5"
+    max_cse_version: "3.1.0"
+    min_cse_version: "3.1.0"
     upgrade_from:
       - "ubuntu-16.04_tkgplus-1.18_weave-2.6.5"
+
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 19.03.12, Kubernetes 1.18.10 (VMware Tanzu Kubernetes Grid Plus), Weave 2.6.5"
     mem: 2048
     name: ubuntu-16.04_tkgplus-1.18_weave-2.6.5
-    revision: 2
+    revision: 3
     sha256_ova: 3c1bec8e2770af5b9b0462e20b7b24633666feedff43c099a6fb1330fcc869a9
     source_ova: "https://cloud-images.ubuntu.com/releases/xenial/release-20180418/ubuntu-16.04-server-cloudimg-amd64.ova"
     source_ova_name: ubuntu-16.04-server-cloudimg-amd64.ova
@@ -42,17 +40,18 @@ templates:
     kubernetes_version: "1.18.10-vmware.1"
     cni: "weave"
     cni_version: "2.6.5"
+    max_cse_version: "3.1.0"
+    min_cse_version: "3.1.0"
     upgrade_from:
       - "ubuntu-16.04_tkgplus-1.17_weave-2.5.2"
   -
     kind: "TKG+"
-    compute_policy: ""
     cpu: 2
     deprecated: false
     description: "Ubuntu 16.04, Docker-CE 18.09.7, Kubernetes 1.17.3 (VMware Tanzu Kubernetes Grid Plus), Weave 2.5.2"
     mem: 2048
     name: ubuntu-16.04_tkgplus-1.17_weave-2.5.2
-    revision: 2
+    revision: 3
     sha256_ova: 3c1bec8e2770af5b9b0462e20b7b24633666feedff43c099a6fb1330fcc869a9
     source_ova: "https://cloud-images.ubuntu.com/releases/xenial/release-20180418/ubuntu-16.04-server-cloudimg-amd64.ova"
     source_ova_name: ubuntu-16.04-server-cloudimg-amd64.ova
@@ -62,5 +61,7 @@ templates:
     kubernetes_version: "1.17.3-vmware.1"
     cni: "weave"
     cni_version: "2.5.2"
+    max_cse_version: "3.1.0"
+    min_cse_version: "3.1.0"
     upgrade_from:
         - ""
