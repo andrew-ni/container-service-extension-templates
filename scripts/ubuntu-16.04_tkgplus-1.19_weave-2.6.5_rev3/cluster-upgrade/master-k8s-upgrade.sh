@@ -3,7 +3,7 @@
 set -e
 
 kubernetes_version=v1.19.3-vmware.1
-etcd_image_version=v3.4.13_vmware.4
+etcd_image_version=v3.4.13-vmware.4
 coredns_image_version=v1.7.0-vmware.5
 pause_image_version=3.2
 
@@ -78,7 +78,7 @@ kubernetesVersion: $kubernetes_version
 echo 'upgrading kubeadm to v1.19.3+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
-kubeadm upgrade apply --conf=$kubeadm_config_path -y
+kubeadm upgrade apply --config=$kubeadm_config_path -y
 
 # delete downloaded Tanzu Kubernetes grid plus
 rm -rf $vmware_kubernetes_dir_name || :
