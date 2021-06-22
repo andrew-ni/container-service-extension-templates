@@ -56,28 +56,11 @@ docker tag registry.tkg.vmware.run/coredns:v1.7.0_vmware.5  k8s.gcr.io/coredns:$
 docker pull weaveworks/weave-npc:2.6.5
 docker pull weaveworks/weave-kube:2.6.5
 
-# create /root/v
-echo "
----
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-dns:
-  type: CoreDNS
-  imageRepository: k8s.gcr.io
-  imageTag: $coredns_image_version
-etcd:
-  local:
-    imageRepository: k8s.gcr.io
-    imageTag: $etcd_image_version
-imageRepository: k8s.gcr.io
-kubernetesVersion: $kubernetes_version
----" > /root/kubeadm-defaults.yaml
-
 echo 'upgrading kubeadm to v1.19.3+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
-kubeadm upgrade --config=/root/node
-]
+kubeadm upgrade node
+
 
 # delete downloaded Tanzu Kubernetes grid plus
 rm -rf $vmware_kubernetes_dir_name || :

@@ -12,8 +12,6 @@ kubernetes_sub_dir=kubernetes-v1.18.10+vmware.1/images
 etcd_sub_dir=etcd-v3.4.3+vmware.11/images
 coredns_sub_dir=coredns-v1.6.7+vmware.6/images
 
-kubeadm_config_path=/root/kubeadm-defaults.conf
-
 # download Tanzu Kubernetes grid plus components and install them
 wget https://downloads.heptio.com/vmware-tanzu-kubernetes-grid/523a448aa3e9a0ef93ff892dceefee0a/vmware-kubernetes-v1.18.10%2Bvmware.1.tar.gz
 tar xvzf $vmware_kubernetes_dir_name.tar.gz
@@ -57,27 +55,11 @@ docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:$
 docker pull weaveworks/weave-npc:2.6.5
 docker pull weaveworks/weave-kube:2.6.5
 
-# create /root/kubeadm-defaults.conf
-echo "---
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-dns:
-  type: CoreDNS
-  imageRepository: k8s.gcr.io
-  imageTag: $coredns_image_version
-etcd:
-  local:
-    imageRepository: k8s.gcr.io
-    imageTag: $etcd_image_version
-imageRepository: k8s.gcr.io
-kubernetesVersion: $kubernetes_version
----" > $kubeadm_config_path
-
 echo 'upgrading kubeadm to v1.18.10+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
 
-kubeadm upgrade node --conf=$kubeadm_config_path
+kubeadm upgrade node
 
 # delete downloaded Tanzu Kubernetes grid plus
 rm -rf vmware-kubernetes-v1.18.10+vmware.1 || :

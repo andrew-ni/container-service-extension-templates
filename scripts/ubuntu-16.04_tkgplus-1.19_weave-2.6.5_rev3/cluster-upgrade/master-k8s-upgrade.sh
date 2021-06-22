@@ -78,7 +78,7 @@ kubernetesVersion: $kubernetes_version
 echo 'upgrading kubeadm to v1.19.3+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
-kubeadm upgrade apply --config=$kubeadm_config_path -y
+kubeadm upgrade apply --config=$kubeadm_config_path -y --allow-experimental-upgrades --ignore-preflight-errors="CoreDNSUnsupportedPlugins,CoreDNSMigration"
 
 # delete downloaded Tanzu Kubernetes grid plus
 rm -rf $vmware_kubernetes_dir_name || :
