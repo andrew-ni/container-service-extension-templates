@@ -77,7 +77,7 @@ kubernetesVersion: $kubernetes_version
 echo 'upgrading kubeadm to v1.18.10+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
-kubeadm upgrade apply --conf=$kubeadm_config_path -y
+kubeadm upgrade apply --config=$kubeadm_config_path -y --ignore-preflight-errors="CoreDNSUnsupportedPlugins,CoreDNSMigration" --allow-experimental-upgrades
 
 
 echo 'deleting downloaded files'
