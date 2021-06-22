@@ -76,14 +76,14 @@ docker load -i ./$vmware_kubernetes_dir_name/$etcd_sub_dir/etcd-v3.4.3_vmware.3.
 # coredns
 docker load -i ./$vmware_kubernetes_dir_name/$coredns_sub_dir/coredns-v1.6.5_vmware.3.tar.gz
 
-docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:$kubernetes_version
-docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:$kubernetes_version
-docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 k8s.gcr.io/kube-apiserver:$kubernetes_version
-docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 k8s.gcr.io/kube-scheduler:$kubernetes_version
-docker tag vmware.io/pause:$pause_image_version k8s.gcr.io/pause:$pause_image_version
-docker tag vmware.io/e2e-test:v1.17.3_vmware.1 k8s.gcr.io/e2e-test:$kubernetes_version
-docker tag vmware.io/etcd:v3.4.3_vmware.3 k8s.gcr.io/etcd:$etcd_image_version
-docker tag vmware.io/coredns:v1.6.5_vmware.3  k8s.gcr.io/coredns:$coredns_image_version
+docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 vmware.io/kube-proxy:$kubernetes_version
+docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 vmware.io/kube-controller-manager:$kubernetes_version
+docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 vmware.io/kube-apiserver:$kubernetes_version
+docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 vmware.io/kube-scheduler:$kubernetes_version
+docker tag vmware.io/pause:$pause_image_version vmware.io/pause:$pause_image_version
+docker tag vmware.io/e2e-test:v1.17.3_vmware.1 vmware.io/e2e-test:$kubernetes_version
+docker tag vmware.io/etcd:v3.4.3_vmware.3 vmware.io/etcd:$etcd_image_version
+docker tag vmware.io/coredns:v1.6.5_vmware.3  vmware.io/coredns:$coredns_image_version
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
@@ -133,13 +133,13 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 dns:
   type: CoreDNS
-  imageRepository: k8s.gcr.io
+  imageRepository: vmware.io
   imageTag: $coredns_image_version
 etcd:
   local:
-    imageRepository: k8s.gcr.io
+    imageRepository: vmware.io
     imageTag: $etcd_image_version
-imageRepository: k8s.gcr.io
+imageRepository: vmware.io
 kubernetesVersion: $kubernetes_version
 ---" > /root/kubeadm-defaults.conf
 

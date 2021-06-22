@@ -44,14 +44,14 @@ docker load -i ./$vmware_kubernetes_dir_name/$etcd_sub_dir/etcd-v3.4.3_vmware.11
 # coredns
 docker load -i ./$vmware_kubernetes_dir_name/$coredns_sub_dir/coredns-v1.6.7_vmware.6.tar.gz
 
-docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:$kubernetes_version
-docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:$kubernetes_version
-docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 k8s.gcr.io/kube-apiserver:$kubernetes_version
-docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 k8s.gcr.io/kube-scheduler:$kubernetes_version
-docker tag registry.tkg.vmware.run/pause:$pause_image_version k8s.gcr.io/pause:$pause_image_version
-docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 k8s.gcr.io/e2e-test:$kubernetes_version
-docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 k8s.gcr.io/etcd:$etcd_image_version
-docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:$coredns_image_version
+docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 registry.tkg.vmware.run/kube-proxy:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 registry.tkg.vmware.run/kube-controller-manager:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 registry.tkg.vmware.run/kube-apiserver:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 registry.tkg.vmware.run/kube-scheduler:$kubernetes_version
+docker tag registry.tkg.vmware.run/pause:$pause_image_version registry.tkg.vmware.run/pause:$pause_image_version
+docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 registry.tkg.vmware.run/e2e-test:$kubernetes_version
+docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 registry.tkg.vmware.run/etcd:$etcd_image_version
+docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  registry.tkg.vmware.run/coredns:$coredns_image_version
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.6.5
@@ -63,13 +63,13 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 dns:
   type: CoreDNS
-  imageRepository: k8s.gcr.io
+  imageRepository: registry.tkg.vmware.run
   imageTag: $coredns_image_version
 etcd:
   local:
-    imageRepository: k8s.gcr.io
+    imageRepository: registry.tkg.vmware.run
     imageTag: $etcd_image_version
-imageRepository: k8s.gcr.io
+imageRepository: registry.tkg.vmware.run
 kubernetesVersion: $kubernetes_version
 ---" > $kubeadm_config_path
 
