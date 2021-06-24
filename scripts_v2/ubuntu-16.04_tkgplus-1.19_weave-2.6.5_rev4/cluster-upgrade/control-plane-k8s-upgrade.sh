@@ -3,7 +3,7 @@
 set -e
 
 kubernetes_version=v1.19.3-vmware.1
-etcd_image_version=v3.4.13_vmware.4
+etcd_image_version=v3.4.13-vmware.4
 coredns_image_version=v1.7.0-vmware.5
 pause_image_version=3.2
 
@@ -11,6 +11,8 @@ vmware_kubernetes_dir_name=vmware-kubernetes-v1.19.3+vmware.1
 kubernetes_sub_dir=kubernetes-v1.19.3+vmware.1/images
 etcd_sub_dir=etcd-v3.4.13+vmware.4/images
 coredns_sub_dir=coredns-v1.7.0+vmware.5/images
+
+kubeadm_config_path=/root/kubeadm-defaults.conf
 
 # download Essential-PKS Kubernetes components and install them
 wget https://downloads.heptio.com/vmware-tanzu-kubernetes-grid/523a448aa3e9a0ef93ff892dceefee0a/vmware-kubernetes-v1.19.3%2Bvmware.1.tar.gz
@@ -57,8 +59,7 @@ docker pull weaveworks/weave-npc:2.6.5
 docker pull weaveworks/weave-kube:2.6.5
 
 # create /root/kubeadm-defaults.conf
-echo "
----
+echo "---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 dns:
@@ -71,12 +72,12 @@ etcd:
     imageTag: $etcd_image_version
 imageRepository: registry.tkg.vmware.run
 kubernetesVersion: $kubernetes_version
----" > /root/kubeadm-defaults.yaml
+---" > $kubeadm_config_path
 
 echo 'upgrading kubeadm to v1.19.3+vmware.1'
 while [ `systemctl is-active kubelet` != 'active' ]; do echo 'waiting for kubelet'; sleep 5; done
 sleep 120
-kubeadm upgrade apply --config=$kubeadm_config_path -y --ignore-preflight-errors="CoreDNSUnsupportedPlugins,CoreDNSMigration" --allow-experimental-upgrades
+kubeadm upgrade apply --config=$kubeadm_config_path -y --allow-experimental-upgrades --ignore-preflight-errors="CoreDNSUnsupportedPlugins,CoreDNSMigration"
 
 # delete downloaded Tanzu Kubernetes grid plus
 rm -rf $vmware_kubernetes_dir_name || :
