@@ -3,6 +3,16 @@
 # exit script if any command has nonzero exit code
 set -e
 
+kubernetes_version=v1.19.3-vmware.1
+etcd_image_version=v3.4.13-vmware.4
+coredns_image_version=v1.7.0-vmware.5
+pause_image_version=3.2
+
+vmware_kubernetes_dir_name=vmware-kubernetes-v1.19.3+vmware.1
+kubernetes_sub_dir=kubernetes-v1.19.3+vmware.1/images
+etcd_sub_dir=etcd-v3.4.13+vmware.4/images
+coredns_sub_dir=coredns-v1.7.0+vmware.5/images
+
 # disable ipv6 to avoid possible connection errors
 echo 'net.ipv6.conf.all.disable_ipv6 = 1' >> /etc/sysctl.conf
 echo 'net.ipv6.conf.default.disable_ipv6 = 1' >> /etc/sysctl.conf
@@ -37,47 +47,47 @@ systemctl restart docker
 while [ `systemctl is-active docker` != 'active' ]; do echo 'waiting for docker'; sleep 5; done
 
 # download Essential-PKS Kubernetes components and install them
-wget https://downloads.heptio.com/vmware-tanzu-kubernetes-grid/523a448aa3e9a0ef93ff892dceefee0a/vmware-kubernetes-v1.18.10%2Bvmware.1.tar.gz
-tar xvzf vmware-kubernetes-v1.18.10+vmware.1.tar.gz
-dpkg -i vmware-kubernetes-v1.18.10+vmware.1/debs/*.deb || :
+wget https://downloads.heptio.com/vmware-tanzu-kubernetes-grid/523a448aa3e9a0ef93ff892dceefee0a/vmware-kubernetes-v1.19.3%2Bvmware.1.tar.gz
+tar xvzf $vmware_kubernetes_dir_name.tar.gz
+dpkg -i $vmware_kubernetes_dir_name/debs/*.deb || :
 sudo apt-get -f install -y
 
 # kube proxy
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-proxy-v1.18.10_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-proxy-v1.19.3_vmware.1.tar.gz
 
 # kube controller manager
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-controller-manager-v1.18.10_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-controller-manager-v1.19.3_vmware.1.tar.gz
 
 # kube api server
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-apiserver-v1.18.10_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-apiserver-v1.19.3_vmware.1.tar.gz
 
 # kube scheduler
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/kube-scheduler-v1.18.10_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-scheduler-v1.19.3_vmware.1.tar.gz
 
 # pause
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/pause-3.2.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/pause-3.2.tar.gz
 
 # e2e test
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/kubernetes-v1.18.10+vmware.1/images/e2e-test-v1.18.10_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/e2e-test-v1.19.3_vmware.1.tar.gz
 
 # etcd
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/etcd-v3.4.3+vmware.11/images/etcd-v3.4.3_vmware.11.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$etcd_sub_dir/etcd-v3.4.13_vmware.4.tar.gz
 
 # coredns
-docker load -i ./vmware-kubernetes-v1.18.10+vmware.1/coredns-v1.6.7+vmware.6/images/coredns-v1.6.7_vmware.6.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$coredns_sub_dir/coredns-v1.7.0_vmware.5.tar.gz
 
-docker tag registry.tkg.vmware.run/kube-proxy:v1.18.10_vmware.1 k8s.gcr.io/kube-proxy:v1.18.10-vmware.1
-docker tag registry.tkg.vmware.run/kube-controller-manager:v1.18.10_vmware.1 k8s.gcr.io/kube-controller-manager:v1.18.10-vmware.1
-docker tag registry.tkg.vmware.run/kube-apiserver:v1.18.10_vmware.1 k8s.gcr.io/kube-apiserver:v1.18.10-vmware.1
-docker tag registry.tkg.vmware.run/kube-scheduler:v1.18.10_vmware.1 k8s.gcr.io/kube-scheduler:v1.18.10-vmware.1
-docker tag registry.tkg.vmware.run/pause:3.2 k8s.gcr.io/pause:3.2
-docker tag registry.tkg.vmware.run/e2e-test:v1.18.10_vmware.1 k8s.gcr.io/e2e-test:v1.18.10-vmware.1
-docker tag registry.tkg.vmware.run/etcd:v3.4.3_vmware.11 k8s.gcr.io/etcd:3.4.3-0
-docker tag registry.tkg.vmware.run/coredns:v1.6.7_vmware.6  k8s.gcr.io/coredns:1.6.7
+docker tag registry.tkg.vmware.run/kube-proxy:v1.19.3_vmware.1 registry.tkg.vmware.run/kube-proxy:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-controller-manager:v1.19.3_vmware.1 registry.tkg.vmware.run/kube-controller-manager:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-apiserver:v1.19.3_vmware.1 registry.tkg.vmware.run/kube-apiserver:$kubernetes_version
+docker tag registry.tkg.vmware.run/kube-scheduler:v1.19.3_vmware.1 registry.tkg.vmware.run/kube-scheduler:$kubernetes_version
+docker tag registry.tkg.vmware.run/pause:$pause_image_version registry.tkg.vmware.run/pause:$pause_image_version
+docker tag registry.tkg.vmware.run/e2e-test:v1.19.3_vmware.1 registry.tkg.vmware.run/e2e-test:$kubernetes_version
+docker tag registry.tkg.vmware.run/etcd:v3.4.13_vmware.4 registry.tkg.vmware.run/etcd:$etcd_image_version
+docker tag registry.tkg.vmware.run/coredns:v1.7.0_vmware.5  registry.tkg.vmware.run/coredns:$coredns_image_version
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
-wget --no-verbose -O weave_v2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
+wget --no-verbose -O /root/weave_v2-6-5.yml "https://cloud.weave.works/k8s/net?k8s-version=$kubever&v=2.6.5"
 
 # pull weave docker images in case cluster has no outbound internet access
 docker pull weaveworks/weave-npc:2.6.5
@@ -105,8 +115,8 @@ apt-get -q update -o Acquire::Retries=3 -o Acquire::http::No-Cache=True -o Acqui
 apt-get -y -q -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 
 echo 'deleting downloaded files'
-rm -rf vmware-kubernetes-v1.18.10+vmware.1 || :
-rm vmware-kubernetes-v1.18.10+vmware.1.tar.gz || :
+rm -rf $vmware_kubernetes_dir_name || :
+rm $vmware_kubernetes_dir_name.tar.gz || :
 
 # enable kubelet service (essential PKS does not enable it by default)
 systemctl enable kubelet
@@ -116,6 +126,22 @@ systemctl enable kubelet
 truncate -s 0 /etc/machine-id
 rm /var/lib/dbus/machine-id || :
 ln -fs /etc/machine-id /var/lib/dbus/machine-id || : # dbus/machine-id is symlink pointing to /etc/machine-id
+
+# create /root/kubeadm-defaults.conf
+echo "---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+dns:
+  type: CoreDNS
+  imageRepository: registry.tkg.vmware.run
+  imageTag: $coredns_image_version
+etcd:
+  local:
+    imageRepository: registry.tkg.vmware.run
+    imageTag: $etcd_image_version
+imageRepository: registry.tkg.vmware.run
+kubernetesVersion: $kubernetes_version
+---" > /root/kubeadm-defaults.conf
 
 sync
 sync

@@ -3,6 +3,16 @@
 # exit script if any command has nonzero exit code
 set -e
 
+kubernetes_version=v1.17.3-vmware.1
+etcd_image_version=v3.4.3-vmware.3
+coredns_image_version=v1.6.5-vmware.3
+pause_image_version=3.1
+
+vmware_kubernetes_dir_name=vmware-kubernetes-v1.17.3+vmware.1
+kubernetes_sub_dir=kubernetes-v1.17.3+vmware.1/images
+etcd_sub_dir=etcd-v3.4.3+vmware.3/images
+coredns_sub_dir=coredns-v1.6.5+vmware.3/images
+
 # disable ipv6 to avoid possible connection errors
 echo 'net.ipv6.conf.all.disable_ipv6 = 1' >> /etc/sysctl.conf
 echo 'net.ipv6.conf.default.disable_ipv6 = 1' >> /etc/sysctl.conf
@@ -38,42 +48,42 @@ while [ `systemctl is-active docker` != 'active' ]; do echo 'waiting for docker'
 
 # download Essential-PKS Kubernetes components and install them
 wget https://downloads.heptio.com/vmware-tanzu-kubernetes-grid/523a448aa3e9a0ef93ff892dceefee0a/vmware-kubernetes-v1.17.3%2Bvmware.1.tar.gz
-tar xvzf vmware-kubernetes-v1.17.3+vmware.1.tar.gz
-dpkg -i vmware-kubernetes-v1.17.3+vmware.1/debs/*.deb || :
+tar xvzf $vmware_kubernetes_dir_name.tar.gz
+dpkg -i $vmware_kubernetes_dir_name/debs/*.deb || :
 sudo apt-get -f install -y
 
 # kube proxy
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-proxy-v1.17.3_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-proxy-v1.17.3_vmware.1.tar.gz
 
 # kube controller manager
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-controller-manager-v1.17.3_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-controller-manager-v1.17.3_vmware.1.tar.gz
 
 # kube api server
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-apiserver-v1.17.3_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-apiserver-v1.17.3_vmware.1.tar.gz
 
 # kube scheduler
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/kube-scheduler-v1.17.3_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/kube-scheduler-v1.17.3_vmware.1.tar.gz
 
 # pause
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/pause-3.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/pause-3.1.tar.gz
 
 # e2e test
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/kubernetes-v1.17.3+vmware.1/images/e2e-test-v1.17.3_vmware.1.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$kubernetes_sub_dir/e2e-test-v1.17.3_vmware.1.tar.gz
 
 # etcd
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/etcd-v3.4.3+vmware.3/images/etcd-v3.4.3_vmware.3.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$etcd_sub_dir/etcd-v3.4.3_vmware.3.tar.gz
 
 # coredns
-docker load -i ./vmware-kubernetes-v1.17.3+vmware.1/coredns-v1.6.5+vmware.3/images/coredns-v1.6.5_vmware.3.tar.gz
+docker load -i ./$vmware_kubernetes_dir_name/$coredns_sub_dir/coredns-v1.6.5_vmware.3.tar.gz
 
-docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 k8s.gcr.io/kube-proxy:v1.17.3-vmware.1
-docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 k8s.gcr.io/kube-controller-manager:v1.17.3-vmware.1
-docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 k8s.gcr.io/kube-apiserver:v1.17.3-vmware.1
-docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 k8s.gcr.io/kube-scheduler:v1.17.3-vmware.1
-docker tag vmware.io/pause:3.1 k8s.gcr.io/pause:3.1
-docker tag vmware.io/e2e-test:v1.17.3_vmware.1 k8s.gcr.io/e2e-test:v1.17.3-vmware.1
-docker tag vmware.io/etcd:v3.4.3_vmware.3 k8s.gcr.io/etcd:3.4.3-0
-docker tag vmware.io/coredns:v1.6.5_vmware.3  k8s.gcr.io/coredns:1.6.5
+docker tag vmware.io/kube-proxy:v1.17.3_vmware.1 vmware.io/kube-proxy:$kubernetes_version
+docker tag vmware.io/kube-controller-manager:v1.17.3_vmware.1 vmware.io/kube-controller-manager:$kubernetes_version
+docker tag vmware.io/kube-apiserver:v1.17.3_vmware.1 vmware.io/kube-apiserver:$kubernetes_version
+docker tag vmware.io/kube-scheduler:v1.17.3_vmware.1 vmware.io/kube-scheduler:$kubernetes_version
+docker tag vmware.io/pause:$pause_image_version vmware.io/pause:$pause_image_version
+docker tag vmware.io/e2e-test:v1.17.3_vmware.1 vmware.io/e2e-test:$kubernetes_version
+docker tag vmware.io/etcd:v3.4.3_vmware.3 vmware.io/etcd:$etcd_image_version
+docker tag vmware.io/coredns:v1.6.5_vmware.3  vmware.io/coredns:$coredns_image_version
 
 # download weave.yml
 export kubever=$(kubectl version --client | base64 | tr -d '\n')
@@ -105,8 +115,8 @@ apt-get -q update -o Acquire::Retries=3 -o Acquire::http::No-Cache=True -o Acqui
 apt-get -y -q -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 
 echo 'deleting downloaded files'
-rm -rf vmware-kubernetes-v1.17.3+vmware.1 || :
-rm vmware-kubernetes-v1.17.3+vmware.1.tar.gz || :
+rm -rf $vmware_kubernetes_dir_name || :
+rm $vmware_kubernetes_dir_name.tar.gz || :
 
 # enable kubelet service (essential PKS does not enable it by default)
 systemctl enable kubelet
@@ -116,6 +126,22 @@ systemctl enable kubelet
 truncate -s 0 /etc/machine-id
 rm /var/lib/dbus/machine-id || :
 ln -fs /etc/machine-id /var/lib/dbus/machine-id || : # dbus/machine-id is symlink pointing to /etc/machine-id
+
+# create /root/kubeadm-defaults.conf
+echo "---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+dns:
+  type: CoreDNS
+  imageRepository: vmware.io
+  imageTag: $coredns_image_version
+etcd:
+  local:
+    imageRepository: vmware.io
+    imageTag: $etcd_image_version
+imageRepository: vmware.io
+kubernetesVersion: $kubernetes_version
+---" > /root/kubeadm-defaults.conf
 
 sync
 sync
