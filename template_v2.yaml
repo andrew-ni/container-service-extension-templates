@@ -8,7 +8,7 @@ templates:
     description: "Ubuntu 16.04, Docker-CE 19.03.12, Kubernetes 1.19.3 (VMware Tanzu Kubernetes Grid Plus), Weave 2.6.5"
     mem: 2048
     name: ubuntu-16.04_tkgplus-1.19_weave-2.6.5
-    revision: 4
+    revision: 5
     sha256_ova: 3c1bec8e2770af5b9b0462e20b7b24633666feedff43c099a6fb1330fcc869a9
     source_ova: "https://cloud-images.ubuntu.com/releases/xenial/release-20180418/ubuntu-16.04-server-cloudimg-amd64.ova"
     source_ova_name: ubuntu-16.04-server-cloudimg-amd64.ova
@@ -18,7 +18,7 @@ templates:
     kubernetes_version: "1.19.3-vmware.1"
     cni: "weave"
     cni_version: "2.6.5"
-    max_cse_version: "3.1.0"
+    max_cse_version: "3.1.1"
     min_cse_version: "3.1.0"
     upgrade_from:
       - "ubuntu-16.04_tkgplus-1.18_weave-2.6.5"
@@ -40,7 +40,7 @@ templates:
     kubernetes_version: "1.18.10-vmware.1"
     cni: "weave"
     cni_version: "2.6.5"
-    max_cse_version: "3.1.0"
+    max_cse_version: "3.1.1"
     min_cse_version: "3.1.0"
     upgrade_from:
       - "ubuntu-16.04_tkgplus-1.17_weave-2.5.2"
@@ -61,7 +61,7 @@ templates:
     kubernetes_version: "1.17.3-vmware.1"
     cni: "weave"
     cni_version: "2.5.2"
-    max_cse_version: "3.1.0"
+    max_cse_version: "3.1.1"
     min_cse_version: "3.1.0"
     upgrade_from:
         - ""
